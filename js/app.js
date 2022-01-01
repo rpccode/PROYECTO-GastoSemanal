@@ -17,6 +17,12 @@ formulario.addEventListener('submit', agregarGastos);
                         this.restante = Number(presupuesto);
                         this.gastos = [];
                 }
+
+                nuevoGastos(gastos){
+                    this.gastos = [...this.gastos, gastos];
+
+                    console.log(this.gastos);
+                }
     }
 
     class UI{
@@ -78,7 +84,7 @@ formulario.addEventListener('submit', agregarGastos);
 
             //leer los  inputs 
             const nombre = document.querySelector('#gasto').value;
-            const cantidad = document.querySelector('#cantidad').value;
+            const cantidad = Number(document.querySelector('#cantidad').value);
             
 
             if ( nombre === '' || cantidad === '') {
@@ -89,7 +95,17 @@ formulario.addEventListener('submit', agregarGastos);
                     return;
             }
 
-          
+          //generar un gasto
+
+          const gasto = {nombre, cantidad,id: Date.now() } ;
+
+          presupuesto.nuevoGastos(gasto);
+
+
+          ui.imprimirAlerta('Agregado Correctamente');
+
+          formulario.reset();
+
 
  }
 
