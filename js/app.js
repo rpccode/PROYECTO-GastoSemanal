@@ -19,7 +19,11 @@ document.addEventListener('DOMContentLoaded', preguntarPresupuesto);
     }
 
     class UI{
-
+            insertarPresupuesto( cantidad ){
+                const {presupuesto,restante} = cantidad;
+                document.querySelector('#total').textContent = (presupuesto);
+                document.querySelector('#restante').textContent = (restante);
+            }
 
     }
 
@@ -42,6 +46,8 @@ document.addEventListener('DOMContentLoaded', preguntarPresupuesto);
 
         presupuesto = new Presupuesto(presupuestoUsuario);
         console.log(presupuesto);
+
+        ui.insertarPresupuesto(presupuesto);
  }
 
 
