@@ -10,7 +10,23 @@ document.addEventListener('DOMContentLoaded', preguntarPresupuesto);
 
  //Classes
 
+    class Presupuesto{
+                constructor(presupuesto){
+                        this.presupuesto = Number(presupuesto);
+                        this.restante = Number(presupuesto);
+                        this.gastos = [];
+                }
+    }
 
+    class UI{
+
+
+    }
+
+    //Instanciar UI
+    const ui = new UI();
+
+    let presupuesto;
 
 
  //Funciones
@@ -24,7 +40,8 @@ document.addEventListener('DOMContentLoaded', preguntarPresupuesto);
          
      }
 
-     console.log(presupuestoUsuario);
+        presupuesto = new Presupuesto(presupuestoUsuario);
+        console.log(presupuesto);
  }
 
 
