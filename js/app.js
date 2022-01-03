@@ -21,7 +21,7 @@ formulario.addEventListener('submit', agregarGastos);
                 nuevoGastos(gastos){
                     this.gastos = [...this.gastos, gastos];
 
-                    console.log(this.gastos);
+                    
                 }
     }
 
@@ -51,6 +51,38 @@ formulario.addEventListener('submit', agregarGastos);
                     }, 2000);
 
             }
+             agregarGastosListar(gastos){
+
+                   this.limpiarHtml();
+                            //IIterar sobre gastos
+                            gastos.forEach(gasto => {
+                                    const {nombre,cantidad,id} = gasto;
+
+                                    //crear un li
+                                    const nuevoGastos= document.createElement('li');
+                                   nuevoGastos.className = 'list-group-item d-flex  justify-content-between align-items-center';
+                                  nuevoGastos.dataset.id = id;
+                                  
+                                    //Agregar html  del gastos
+                                    nuevoGastos.innerHTML = `
+                                        ${nombre} <span class="badge badge-primary badge-pill"> ${cantidad}</span>
+                                    `;
+
+
+                                    //boton para eliminar los gastos
+                                    const btnBorrar = document.createElement('button');
+                                    btnBorrar.classList.add ('btn','btn-danger','borrar-gasto');
+                                    btnBorrar.textContent = 'x';
+                                    nuevoGastos.appendChild(btnBorrar);
+                                    //Agregar al  html 
+                                    gastosListado.appendChild(nuevoGastos);
+                            });
+            }
+            limpiarHtml(){
+                        while (gastosListado.firstChild) {
+                        gastosListado.removeChild(gastosListado.firstChild);
+                    }
+            }
 
     }
 
@@ -72,10 +104,14 @@ formulario.addEventListener('submit', agregarGastos);
      }
 
         presupuesto = new Presupuesto(presupuestoUsuario);
-        console.log(presupuesto);
+       
 
         ui.insertarPresupuesto(presupuesto);
+
+
  }
+
+
 
  function agregarGastos(e) {
             e.preventDefault();
@@ -103,6 +139,9 @@ formulario.addEventListener('submit', agregarGastos);
 
 
           ui.imprimirAlerta('Agregado Correctamente');
+
+          const  {gastos} = presupuesto;
+          ui.agregarGastosListar(gastos);
 
           formulario.reset();
 
