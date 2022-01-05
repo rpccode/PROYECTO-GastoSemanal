@@ -21,7 +21,15 @@ formulario.addEventListener('submit', agregarGastos);
                 nuevoGastos(gastos){
                     this.gastos = [...this.gastos, gastos];
 
-                    
+                    this.calcularRestante();
+                }
+
+                calcularRestante(){
+                        const gastados = this.gastos.reduce((total,gasto) => total + gasto.cantidad, 0)
+
+                        this.restante = this.presupuesto - gastados;
+
+                        console.log(this.restante);
                 }
     }
 
@@ -84,6 +92,10 @@ formulario.addEventListener('submit', agregarGastos);
                     }
             }
 
+            actualizarRestante(restante){
+                document.querySelector('#restante').textContent = (restante);
+            }
+
     }
 
     //Instanciar UI
@@ -140,9 +152,9 @@ formulario.addEventListener('submit', agregarGastos);
 
           ui.imprimirAlerta('Agregado Correctamente');
 
-          const  {gastos} = presupuesto;
+          const  {gastos,restante} = presupuesto;
           ui.agregarGastosListar(gastos);
-
+          ui.actualizarRestante(restante);
           formulario.reset();
 
 
