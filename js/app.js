@@ -28,6 +28,11 @@ formulario.addEventListener('submit', agregarGastos);
 
                         
                 }
+                eliminarGasto(id){
+                    this.gastos = this.gastos.filter(gasto => gasto.id != id);
+                    this.calcularRestante();
+                    
+                }
     }
 
     class UI{
@@ -78,6 +83,9 @@ formulario.addEventListener('submit', agregarGastos);
                                     const btnBorrar = document.createElement('button');
                                     btnBorrar.classList.add ('btn','btn-danger','borrar-gasto');
                                     btnBorrar.textContent = 'x';
+                                    btnBorrar.onclick = () => {
+                                        eliminarGasto(id)
+                                    }
                                     nuevoGastos.appendChild(btnBorrar);
                                     //Agregar al  html 
                                     gastosListado.appendChild(nuevoGastos);
@@ -104,9 +112,13 @@ formulario.addEventListener('submit', agregarGastos);
                     restanteDiv.classList.add('alert-danger');
                 } else if ((presupuesto / 2) >= restante){
                     
-                    restanteDiv.classList.remove('alert-success');
+                    restanteDiv.classList.remove('alert-success','alert-danger');
                     restanteDiv.classList.add('alert-warning');
+                } else  {
+                    restanteDiv.classList.remove('alert-danger','alert-warning');
+                    restanteDiv.classList.add('alert-success');
                 }
+            
 
                 if (restante <= 0) {
                         ui.imprimirAlerta('El presupuesto se a Agotado','error');
@@ -178,5 +190,13 @@ formulario.addEventListener('submit', agregarGastos);
           formulario.reset();
 
 
+ }
+ function eliminarGasto(id){
+     presupuesto.eliminarGasto(id);
+     const  {gastos ,restante} = presupuesto
+         ui.agregarGastosListar(gastos);
+
+         ui.actualizarRestante(restante);
+         ui.comprobarPresupuesto(presupuesto);
  }
 
