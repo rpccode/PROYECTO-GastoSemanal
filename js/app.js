@@ -2,15 +2,12 @@
  const formulario = document.querySelector('#agregar-gasto');
  const gastosListado = document.querySelector('#gastos ul');
  
-
-
  //Eventos
 document.addEventListener('DOMContentLoaded', preguntarPresupuesto);
 
 formulario.addEventListener('submit', agregarGastos);
 
  //Classes
-
     class Presupuesto{
                 constructor(presupuesto){
                         this.presupuesto = Number(presupuesto);
@@ -29,7 +26,7 @@ formulario.addEventListener('submit', agregarGastos);
 
                         this.restante = this.presupuesto - gastados;
 
-                        console.log(this.restante);
+                        
                 }
     }
 
@@ -96,6 +93,28 @@ formulario.addEventListener('submit', agregarGastos);
                 document.querySelector('#restante').textContent = (restante);
             }
 
+            comprobarPresupuesto(presupuestoObj){
+                const {presupuesto,restante} = presupuestoObj;
+
+                const restanteDiv = document.querySelector('.restante');
+
+                //comprobar 25%
+                if ((presupuesto / 4) >= restante) {
+                    restanteDiv.classList.remove('alert-success', 'alert-warning');
+                    restanteDiv.classList.add('alert-danger');
+                } else if ((presupuesto / 2) >= restante){
+                    
+                    restanteDiv.classList.remove('alert-success');
+                    restanteDiv.classList.add('alert-warning');
+                }
+
+                if (restante <= 0) {
+                        ui.imprimirAlerta('El presupuesto se a Agotado','error');
+
+                        formulario.querySelector('button[type="submit"] ').disabled = true; 
+                }
+            }
+
     }
 
     //Instanciar UI
@@ -155,6 +174,7 @@ formulario.addEventListener('submit', agregarGastos);
           const  {gastos,restante} = presupuesto;
           ui.agregarGastosListar(gastos);
           ui.actualizarRestante(restante);
+          ui.comprobarPresupuesto(presupuesto);
           formulario.reset();
 
 
